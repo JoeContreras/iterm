@@ -30,7 +30,7 @@ return packer.startup(function(use)
 	use("nvim-lua/plenary.nvim")
 
 	use("bluz71/vim-nightfly-guicolors") --colorscheme
-
+	use("navarasu/onedark.nvim") --colorscheme
 	--tmux & split window navigation
 	use("christoomey/vim-tmux-navigator")
 
@@ -38,24 +38,20 @@ return packer.startup(function(use)
 	use("szw/vim-maximizer")
 	-- essential plugins
 	use("tpope/vim-surround")
-	use("vim-scripts/ReplaceWithRegister")
+	use("inkarkat/vim-ReplaceWithRegister")
 
 	--comment with gc
 	use("numToStr/Comment.nvim")
 
-	--comment with gc
-	use({
-		"nvim-tree/nvim-tree.lua",
-		requires = {
-			"nvim-tree/nvim-web-devicons", -- optional, for file icons
-		},
-		tag = "nightly", -- optional, updated every week. (see issue #1193)
-	})
+	use("JoosepAlviste/nvim-ts-context-commentstring")
 
-	-- comment with gc
+	use("nvim-tree/nvim-tree.lua")
+	use("nvim-tree/nvim-web-devicons")
+
+	-- lua line
 	use("nvim-lualine/lualine.nvim")
 
-	-- fuzzy finding w/ telescope
+	-- fuzzy finding w/ telescopeonedark
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
 	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x" }) -- fuzzy finder
 
@@ -76,7 +72,14 @@ return packer.startup(function(use)
 	-- configuring lsp servers
 	use("neovim/nvim-lspconfig") -- easily configure language servers
 	use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
-	use({ "glepnir/lspsaga.nvim", branch = "main" }) -- enhanced lsp uis
+	use({
+		"glepnir/lspsaga.nvim",
+		branch = "main",
+		requires = {
+			{ "nvim-tree/nvim-web-devicons" },
+			{ "nvim-treesitter/nvim-treesitter" },
+		},
+	}) -- enhanced lsp uis
 	use("jose-elias-alvarez/typescript.nvim") -- additional functionality for typescript server (e.g. rename file & update imports)
 	use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
 
@@ -99,6 +102,17 @@ return packer.startup(function(use)
 
 	-- git integration
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
+
+	-- copilot
+	use("zbirenbaum/copilot.lua") -- show line modifications on left hand side
+
+	use({
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua" },
+		config = function()
+			require("copilot_cmp").setup()
+		end,
+	})
 
 	if packer_bootstrap then
 		require("packer").sync()

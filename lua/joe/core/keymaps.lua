@@ -1,13 +1,18 @@
 vim.g.mapleader = " "
 local keymap = vim.keymap
 
-
 ---------------------
 -- General Keymaps
 ---------------------
 
 -- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>")
+
+-- last non blank character
+keymap.set("n", "m", "g_")
+
+-- first non blank character
+keymap.set("n", "n", "^")
 
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>")
